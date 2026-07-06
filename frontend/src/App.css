@@ -169,15 +169,35 @@ button.danger:hover {
 /* --- Back link --- */
 
 .back-link {
-  display: inline-block;
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 20px;
+  padding: 7px 14px 7px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
   text-decoration: none;
+  transition: color 0.15s, border-color 0.15s, background 0.15s, box-shadow 0.15s;
 }
 
 .back-link:hover {
-  text-decoration: underline;
+  color: var(--accent);
+  border-color: var(--accent-border);
+  background: var(--accent-bg);
+  box-shadow: var(--shadow);
+}
+
+.back-link .arrow {
+  display: inline-block;
+  transition: transform 0.2s ease;
+}
+
+.back-link:hover .arrow {
+  transform: translateX(-3px);
 }
 
 /* --- Book grid --- */

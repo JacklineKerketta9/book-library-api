@@ -28,7 +28,7 @@ function BookDetail() {
     return (
         <div className='book-detail'>
             <Link to='/' className='back-link'>
-                &larr; Back to list
+                <span className='arrow'>&larr;</span> Back to list
             </Link>
 
             <div className='detail-card'>
