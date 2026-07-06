@@ -1,25 +1,55 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useQuery } from '@apollo/client/react'
-import { GET_BOOKS } from '../api/queries'
+import { GET_BOOKS, GET_BOOKS_BY_GENRE } from '../api/queries'
 
 function BookList() {
-    const { loading, error, data } = useQuery(GET_BOOKS)
+    const [selectedGenre, setSelectedGenre] = useState('')
 
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>Error loading books: {error.message}</p>
+    const allBooks = useQuery(GET_BOOKS)
+    const filteredBooks = useQuery(GET_BOOKS_BY_GENRE, {
+        variables: { genre: selectedGenre },
+        skip: !selectedGenre,
+    })
+
+    if (allBooks.loading) return <p>Loading...</p>
+    if (allBooks.error) return <p>Error loading books: {allBooks.error.message}</p>
+
+    const genres = [...new Set(allBooks.data.books.map(book => book.genre))]
+    const books = selectedGenre ? filteredBooks.data?.booksByGenre : allBooks.data.books
 
     return (
-        <div>
-            <Link to='/add'>+ Add book</Link>
+        <div className='book-list'>
+            <div className='toolbar'>
+                <select value={selectedGenre} onChange={e => setSelectedGenre(e.target.value)}>
+                    <option value=''>All genres</option>
+                    {genres.map(genre => (
+                        <option key={genre} value={genre}>
+                            {genre}
+                        </option>
+                    ))}
+                </select>
+                <Link to='/add' className='button'>
+                    + Add book
+                </Link>
+            </div>
+
+            {selectedGenre && filteredBooks.loading && <p>Filtering...</p>}
+
             <ul>
-                {data.books.map(book => (
+                {books?.map(book => (
                     <li key={book.id}>
                         <Link to={`/${book.id}`}>
-                            {book.title} — {book.author} ({book.genre})
+                            <span className='title'>{book.title}</span>
+                            <span className='meta'>
+                                {book.author} · {book.genre}
+                            </span>
                         </Link>
                     </li>
                 ))}
             </ul>
+
+            {books?.length === 0 && <p>No books in this genre yet.</p>}
         </div>
     )
 }

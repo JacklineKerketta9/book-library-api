@@ -29,6 +29,7 @@ export const GET_BOOKS_BY_GENRE = gql`
             id
             title
             author
+            genre
         }
     }
 `
