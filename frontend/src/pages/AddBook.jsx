@@ -25,21 +25,35 @@ function AddBook() {
 
     return (
         <div className='add-book'>
-            <Link to='/'>&larr; Back to list</Link>
-            <h2>Add a book</h2>
-            <form className='book-form' onSubmit={handleSubmit}>
-                <input name='title' placeholder='Title' value={form.title} onChange={handleChange} required />
-                <input name='author' placeholder='Author' value={form.author} onChange={handleChange} required />
-                <input name='genre' placeholder='Genre' value={form.genre} onChange={handleChange} required />
-                <label>
-                    <input type='checkbox' name='read' checked={form.read} onChange={handleChange} />
-                    Already read
-                </label>
-                <button type='submit' disabled={loading}>
-                    {loading ? 'Adding...' : 'Add book'}
-                </button>
-            </form>
-            {error && <p className='badge unread'>Error adding book: {error.message}</p>}
+            <Link to='/' className='back-link'>
+                &larr; Back to list
+            </Link>
+
+            <div className='detail-card form-card'>
+                <h2>Add a book</h2>
+                <form className='book-form' onSubmit={handleSubmit}>
+                    <label className='field'>
+                        <span>Title</span>
+                        <input name='title' value={form.title} onChange={handleChange} required />
+                    </label>
+                    <label className='field'>
+                        <span>Author</span>
+                        <input name='author' value={form.author} onChange={handleChange} required />
+                    </label>
+                    <label className='field'>
+                        <span>Genre</span>
+                        <input name='genre' value={form.genre} onChange={handleChange} required />
+                    </label>
+                    <label className='checkbox-field'>
+                        <input type='checkbox' name='read' checked={form.read} onChange={handleChange} />
+                        Already read
+                    </label>
+                    <button type='submit' className='primary' disabled={loading}>
+                        {loading ? 'Adding...' : 'Add book'}
+                    </button>
+                </form>
+                {error && <p className='status-text error'>Error adding book: {error.message}</p>}
+            </div>
         </div>
     )
 }

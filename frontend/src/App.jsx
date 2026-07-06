@@ -1,5 +1,5 @@
 import { Suspense, lazy } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import './App.css'
 
 const BookList = lazy(() => import('./pages/BookList'))
@@ -10,33 +10,43 @@ function App() {
     return (
         <div className='App'>
             <Router>
-                <h1>Book Library</h1>
-                <Routes>
-                    <Route
-                        path='/'
-                        element={
-                            <Suspense fallback={<p>Loading...</p>}>
-                                <BookList />
-                            </Suspense>
-                        }
-                    />
-                    <Route
-                        path='/:bookId'
-                        element={
-                            <Suspense fallback={<p>Loading...</p>}>
-                                <BookDetail />
-                            </Suspense>
-                        }
-                    />
-                    <Route
-                        path='/add'
-                        element={
-                            <Suspense fallback={<p>Loading...</p>}>
-                                <AddBook />
-                            </Suspense>
-                        }
-                    />
-                </Routes>
+                <header className='app-header'>
+                    <Link to='/' className='brand'>
+                        <span className='brand-mark'>📚</span>
+                        <span>
+                            <h1>Book Library</h1>
+                            <p className='tagline'>Your reading, organized.</p>
+                        </span>
+                    </Link>
+                </header>
+                <main>
+                    <Routes>
+                        <Route
+                            path='/'
+                            element={
+                                <Suspense fallback={<p className='status-text'>Loading...</p>}>
+                                    <BookList />
+                                </Suspense>
+                            }
+                        />
+                        <Route
+                            path='/:bookId'
+                            element={
+                                <Suspense fallback={<p className='status-text'>Loading...</p>}>
+                                    <BookDetail />
+                                </Suspense>
+                            }
+                        />
+                        <Route
+                            path='/add'
+                            element={
+                                <Suspense fallback={<p className='status-text'>Loading...</p>}>
+                                    <AddBook />
+                                </Suspense>
+                            }
+                        />
+                    </Routes>
+                </main>
             </Router>
         </div>
     )

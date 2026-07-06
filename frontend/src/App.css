@@ -1,62 +1,91 @@
 .App {
   text-align: left;
+  min-height: 100vh;
 }
 
-/* --- Toolbar (genre filter + add button) --- */
+main {
+  padding: 24px 24px 64px;
+  animation: fade-in 0.25s ease;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- Header --- */
+
+.app-header {
+  background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 24px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  width: fit-content;
+}
+
+.brand-mark {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.tagline {
+  font-size: 13px;
+  color: var(--text);
+  margin: 0;
+}
+
+/* --- Toolbar --- */
 
 .toolbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
 }
 
-.toolbar select {
-  padding: 8px 10px;
-  border-radius: 6px;
+.toolbar .search {
+  flex: 1 1 200px;
+}
+
+input,
+select {
+  padding: 9px 12px;
+  border-radius: 8px;
   border: 1px solid var(--border);
-  background: var(--bg);
+  background: var(--card-bg);
   color: var(--text-h);
   font-size: 14px;
+  font-family: var(--sans);
+  transition: border-color 0.15s, box-shadow 0.15s;
 }
 
-/* --- Book list --- */
-
-.book-list ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.book-list li a {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  padding: 12px 14px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--card-bg);
-  text-decoration: none;
-  transition: border-color 0.15s, transform 0.1s;
-}
-
-.book-list li a:hover {
+input:focus,
+select:focus {
+  outline: none;
   border-color: var(--accent-border);
-  transform: translateY(-1px);
+  box-shadow: 0 0 0 3px var(--accent-bg);
 }
 
-.book-list .title {
-  font-weight: 600;
-  color: var(--text-h);
-}
-
-.book-list .meta {
+.stats {
   font-size: 13px;
   color: var(--text);
+  margin: 0 0 16px;
 }
 
 /* --- Buttons --- */
@@ -66,41 +95,157 @@ button,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 8px 14px;
+  padding: 9px 16px;
   font-size: 14px;
-  font-weight: 500;
-  border-radius: 6px;
-  border: 1px solid var(--accent-border);
-  background: var(--accent-bg);
-  color: var(--accent);
+  font-weight: 600;
+  font-family: var(--sans);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text-h);
   cursor: pointer;
   text-decoration: none;
-  transition: filter 0.15s;
+  transition: transform 0.1s, box-shadow 0.15s, filter 0.15s;
+  white-space: nowrap;
 }
 
 button:hover,
 .button:hover {
-  filter: brightness(1.1);
+  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+}
+
+button:active,
+.button:active {
+  transform: translateY(0);
 }
 
 button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
+}
+
+button.primary,
+.button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
 }
 
 button.danger {
   border-color: var(--danger);
-  background: var(--danger-bg);
   color: var(--danger);
+  background: transparent;
 }
 
-/* --- Book detail --- */
+button.danger:hover {
+  background: var(--danger-bg);
+}
 
-.book-detail .actions {
+/* --- Back link --- */
+
+.back-link {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* --- Book grid --- */
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.book-card {
   display: flex;
-  gap: 8px;
-  margin-top: 16px;
+  gap: 12px;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--card-bg);
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s;
 }
+
+.book-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent-border);
+}
+
+.cover {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.cover.large {
+  width: 72px;
+  height: 72px;
+  font-size: 28px;
+  border-radius: 14px;
+}
+
+.book-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.title {
+  font-weight: 600;
+  color: var(--text-h);
+  font-size: 14px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.author {
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* --- Tags (genre) --- */
+
+.tag {
+  display: inline-block;
+  align-self: flex-start;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: capitalize;
+  margin-top: 2px;
+}
+
+.tag-0, .cover.tag-0 { background: var(--tag-0-bg); color: var(--tag-0-text); }
+.tag-1, .cover.tag-1 { background: var(--tag-1-bg); color: var(--tag-1-text); }
+.tag-2, .cover.tag-2 { background: var(--tag-2-bg); color: var(--tag-2-text); }
+.tag-3, .cover.tag-3 { background: var(--tag-3-bg); color: var(--tag-3-text); }
+.tag-4, .cover.tag-4 { background: var(--tag-4-bg); color: var(--tag-4-text); }
+.tag-5, .cover.tag-5 { background: var(--tag-5-bg); color: var(--tag-5-text); }
+.tag-6, .cover.tag-6 { background: var(--tag-6-bg); color: var(--tag-6-text); }
+.tag-7, .cover.tag-7 { background: var(--tag-7-bg); color: var(--tag-7-text); }
+
+/* --- Read/unread badge --- */
 
 .badge {
   display: inline-block;
@@ -120,33 +265,127 @@ button.danger {
   color: var(--accent);
 }
 
-/* --- Add book form --- */
+/* --- Skeleton loading --- */
+
+.skeleton-block {
+  background: linear-gradient(90deg, var(--border) 25%, var(--bg-subtle) 50%, var(--border) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 6px;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.book-card.skeleton {
+  cursor: default;
+}
+
+.book-card.skeleton .cover {
+  background: none;
+}
+
+.skeleton-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  justify-content: center;
+}
+
+.skeleton-block.line {
+  height: 12px;
+  width: 100%;
+}
+
+.skeleton-block.line.short {
+  width: 60%;
+}
+
+/* --- Status text --- */
+
+.status-text {
+  color: var(--text);
+  font-size: 14px;
+  padding: 24px 0;
+}
+
+.status-text.error {
+  color: var(--danger);
+}
+
+/* --- Book detail --- */
+
+.detail-card {
+  display: flex;
+  gap: 20px;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--card-bg);
+  box-shadow: var(--shadow);
+}
+
+.detail-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.detail-meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin: 6px 0 10px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+/* --- Forms --- */
+
+.form-card {
+  display: block;
+}
 
 .book-form {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  margin-top: 12px;
+  gap: 14px;
+  margin-top: 8px;
   max-width: 360px;
 }
 
-.book-form input[type='text'],
-.book-form input:not([type]) {
-  padding: 8px 10px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: var(--bg);
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field span {
+  font-size: 13px;
+  font-weight: 600;
   color: var(--text-h);
+}
+
+.checkbox-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   font-size: 14px;
 }
 
-.book-form label {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
+.checkbox-field input {
+  width: auto;
 }
 
 .book-form button {
   align-self: flex-start;
+  margin-top: 4px;
 }

@@ -2,22 +2,34 @@
   --text: #6b6375;
   --text-h: #08060d;
   --bg: #fff;
+  --bg-subtle: #f7f6f4;
   --border: #e5e4e7;
-  --card-bg: #faf9f7;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
+  --card-bg: #ffffff;
+  --accent: #7c3aed;
+  --accent-bg: rgba(124, 58, 237, 0.1);
+  --accent-border: rgba(124, 58, 237, 0.35);
   --danger: #d33a3a;
   --danger-bg: rgba(211, 58, 58, 0.1);
   --success: #2f9e5b;
   --success-bg: rgba(47, 158, 91, 0.12);
+  --shadow: 0 1px 2px rgba(16, 15, 20, 0.04), 0 4px 12px rgba(16, 15, 20, 0.06);
+  --shadow-hover: 0 2px 4px rgba(16, 15, 20, 0.06), 0 12px 24px rgba(16, 15, 20, 0.1);
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --tag-0-bg: #fee2e2; --tag-0-text: #b91c1c;
+  --tag-1-bg: #ffedd5; --tag-1-text: #c2410c;
+  --tag-2-bg: #fef3c7; --tag-2-text: #b45309;
+  --tag-3-bg: #dcfce7; --tag-3-text: #15803d;
+  --tag-4-bg: #ccfbf1; --tag-4-text: #0f766e;
+  --tag-5-bg: #dbeafe; --tag-5-text: #1d4ed8;
+  --tag-6-bg: #ede9fe; --tag-6-text: #6d28d9;
+  --tag-7-bg: #fce7f3; --tag-7-text: #be185d;
 
-  font: 16px/145% var(--sans);
+  --sans: 'Inter', system-ui, 'Segoe UI', Roboto, sans-serif;
+
+  font: 15px/1.5 var(--sans);
   color-scheme: light dark;
   color: var(--text);
-  background: var(--bg);
+  background: var(--bg-subtle);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -29,15 +41,27 @@
     --text: #9ca3af;
     --text-h: #f3f4f6;
     --bg: #16171d;
+    --bg-subtle: #101116;
     --border: #2e303a;
     --card-bg: #1c1d24;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
+    --accent: #a78bfa;
+    --accent-bg: rgba(167, 139, 250, 0.15);
+    --accent-border: rgba(167, 139, 250, 0.4);
     --danger: #ef6262;
     --danger-bg: rgba(239, 98, 98, 0.15);
     --success: #4ade80;
     --success-bg: rgba(74, 222, 128, 0.15);
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.35);
+    --shadow-hover: 0 2px 4px rgba(0, 0, 0, 0.35), 0 12px 24px rgba(0, 0, 0, 0.45);
+
+    --tag-0-bg: rgba(248, 113, 113, 0.15); --tag-0-text: #f87171;
+    --tag-1-bg: rgba(251, 146, 60, 0.15); --tag-1-text: #fb923c;
+    --tag-2-bg: rgba(251, 191, 36, 0.15); --tag-2-text: #fbbf24;
+    --tag-3-bg: rgba(74, 222, 128, 0.15); --tag-3-text: #4ade80;
+    --tag-4-bg: rgba(45, 212, 191, 0.15); --tag-4-text: #2dd4bf;
+    --tag-5-bg: rgba(96, 165, 250, 0.15); --tag-5-text: #60a5fa;
+    --tag-6-bg: rgba(167, 139, 250, 0.15); --tag-6-text: #a78bfa;
+    --tag-7-bg: rgba(244, 114, 182, 0.15); --tag-7-text: #f472b6;
   }
 }
 
@@ -50,26 +74,26 @@ body {
 }
 
 #root {
-  max-width: 640px;
+  max-width: 800px;
   margin: 0 auto;
-  padding: 24px 20px 64px;
 }
 
 h1,
 h2 {
   font-family: var(--sans);
-  font-weight: 600;
+  font-weight: 700;
   color: var(--text-h);
+  letter-spacing: -0.01em;
 }
 
 h1 {
-  font-size: 28px;
-  margin: 0 0 24px;
+  font-size: 20px;
+  margin: 0;
 }
 
 h2 {
-  font-size: 20px;
-  margin: 16px 0 4px;
+  font-size: 22px;
+  margin: 0 0 4px;
 }
 
 p {
@@ -78,4 +102,8 @@ p {
 
 a {
   color: var(--accent);
+}
+
+::selection {
+  background: var(--accent-bg);
 }

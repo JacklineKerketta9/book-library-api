@@ -2,6 +2,7 @@ import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useQuery, useMutation } from '@apollo/client/react'
 import { GET_BOOK, GET_BOOKS } from '../api/queries'
 import { MARK_BOOK_AS_READ, DELETE_BOOK } from '../api/mutations'
+import { genreColorIndex } from '../utils/genreColor'
 
 function BookDetail() {
     const { bookId } = useParams()
@@ -13,8 +14,8 @@ function BookDetail() {
         refetchQueries: [{ query: GET_BOOKS }],
     })
 
-    if (loading) return <p>Loading...</p>
-    if (error) return <p>Error loading book: {error.message}</p>
+    if (loading) return <p className='status-text'>Loading...</p>
+    if (error) return <p className='status-text error'>Error loading book: {error.message}</p>
 
     const book = data.book
 
@@ -26,24 +27,35 @@ function BookDetail() {
 
     return (
         <div className='book-detail'>
-            <Link to='/'>&larr; Back to list</Link>
-            <h2>{book.title}</h2>
-            <p>Author: {book.author}</p>
-            <p>Genre: {book.genre}</p>
-            <p>
-                Status: <span className={book.read ? 'badge read' : 'badge unread'}>{book.read ? 'Read' : 'Unread'}</span>
-            </p>
+            <Link to='/' className='back-link'>
+                &larr; Back to list
+            </Link>
 
-            <div className='actions'>
-                {!book.read && (
-                    <button onClick={() => markBookAsRead({ variables: { bookId } })} disabled={marking}>
-                        {marking ? 'Marking...' : 'Mark as read'}
-                    </button>
-                )}
+            <div className='detail-card'>
+                <div className={`cover large tag-${genreColorIndex(book.genre)}`}>
+                    {book.title.charAt(0).toUpperCase()}
+                </div>
+                <div className='detail-info'>
+                    <h2>{book.title}</h2>
+                    <p className='author'>{book.author}</p>
+                    <div className='detail-meta'>
+                        <span className={`tag tag-${genreColorIndex(book.genre)}`}>{book.genre}</span>
+                        <span className={book.read ? 'badge read' : 'badge unread'}>
+                            {book.read ? '✓ Read' : '○ Unread'}
+                        </span>
+                    </div>
 
-                <button onClick={handleDelete} disabled={deleting} className='danger'>
-                    {deleting ? 'Deleting...' : 'Delete'}
-                </button>
+                    <div className='actions'>
+                        {!book.read && (
+                            <button onClick={() => markBookAsRead({ variables: { bookId } })} disabled={marking}>
+                                {marking ? 'Marking...' : 'Mark as read'}
+                            </button>
+                        )}
+                        <button onClick={handleDelete} disabled={deleting} className='danger'>
+                            {deleting ? 'Deleting...' : 'Delete'}
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     )
