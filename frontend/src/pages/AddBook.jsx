@@ -24,10 +24,10 @@ function AddBook() {
     }
 
     return (
-        <div>
+        <div className='add-book'>
             <Link to='/'>&larr; Back to list</Link>
             <h2>Add a book</h2>
-            <form onSubmit={handleSubmit}>
+            <form className='book-form' onSubmit={handleSubmit}>
                 <input name='title' placeholder='Title' value={form.title} onChange={handleChange} required />
                 <input name='author' placeholder='Author' value={form.author} onChange={handleChange} required />
                 <input name='genre' placeholder='Genre' value={form.genre} onChange={handleChange} required />
@@ -39,7 +39,7 @@ function AddBook() {
                     {loading ? 'Adding...' : 'Add book'}
                 </button>
             </form>
-            {error && <p>Error adding book: {error.message}</p>}
+            {error && <p className='badge unread'>Error adding book: {error.message}</p>}
         </div>
     )
 }
