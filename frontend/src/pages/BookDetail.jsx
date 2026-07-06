@@ -8,8 +8,8 @@ function BookDetail() {
     const navigate = useNavigate()
 
     const { loading, error, data } = useQuery(GET_BOOK, { variables: { bookId } })
-    const [markBookAsRead] = useMutation(MARK_BOOK_AS_READ)
-    const [deleteBook] = useMutation(DELETE_BOOK, {
+    const [markBookAsRead, { loading: marking }] = useMutation(MARK_BOOK_AS_READ)
+    const [deleteBook, { loading: deleting }] = useMutation(DELETE_BOOK, {
         refetchQueries: [{ query: GET_BOOKS }],
     })
 
@@ -18,28 +18,33 @@ function BookDetail() {
 
     const book = data.book
 
+    const handleDelete = async () => {
+        if (!window.confirm(`Delete "${book.title}"? This can't be undone.`)) return
+        await deleteBook({ variables: { bookId } })
+        navigate('/')
+    }
+
     return (
-        <div>
+        <div className='book-detail'>
             <Link to='/'>&larr; Back to list</Link>
             <h2>{book.title}</h2>
             <p>Author: {book.author}</p>
             <p>Genre: {book.genre}</p>
-            <p>Read: {book.read ? 'Yes' : 'No'}</p>
+            <p>
+                Status: <span className={book.read ? 'badge read' : 'badge unread'}>{book.read ? 'Read' : 'Unread'}</span>
+            </p>
 
-            {!book.read && (
-                <button onClick={() => markBookAsRead({ variables: { bookId } })}>
-                    Mark as read
+            <div className='actions'>
+                {!book.read && (
+                    <button onClick={() => markBookAsRead({ variables: { bookId } })} disabled={marking}>
+                        {marking ? 'Marking...' : 'Mark as read'}
+                    </button>
+                )}
+
+                <button onClick={handleDelete} disabled={deleting} className='danger'>
+                    {deleting ? 'Deleting...' : 'Delete'}
                 </button>
-            )}
-
-            <button
-                onClick={async () => {
-                    await deleteBook({ variables: { bookId } })
-                    navigate('/')
-                }}
-            >
-                Delete
-            </button>
+            </div>
         </div>
     )
 }
