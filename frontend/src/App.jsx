@@ -11,18 +11,20 @@ function AppHeader() {
 
     return (
         <header className='app-header'>
-            <Link to='/' className='brand'>
-                <span className='brand-mark'>📚</span>
-                <span>
-                    <h1>Book Library</h1>
-                    <p className='tagline'>Your reading, organized.</p>
-                </span>
-            </Link>
-            {location.pathname !== '/add' && (
-                <Link to='/add' className='button primary'>
-                    + Add book
+            <div className='header-inner'>
+                <Link to='/' className='brand'>
+                    <span className='brand-mark'>📚</span>
+                    <span>
+                        <h1>Book Library</h1>
+                        <p className='tagline'>Your reading, organized.</p>
+                    </span>
                 </Link>
-            )}
+                {location.pathname !== '/add' && (
+                    <Link to='/add' className='button primary'>
+                        + Add book
+                    </Link>
+                )}
+            </div>
         </header>
     )
 }
