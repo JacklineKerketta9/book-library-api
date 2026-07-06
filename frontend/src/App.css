@@ -4,7 +4,7 @@
 }
 
 main {
-  padding: 24px 24px 64px;
+  padding: 32px 40px 64px;
   animation: fade-in 0.25s ease;
 }
 
@@ -24,7 +24,7 @@ main {
 .app-header {
   background: var(--card-bg);
   border-bottom: 1px solid var(--border);
-  padding: 14px 24px;
+  padding: 16px 40px;
   position: sticky;
   top: 0;
   z-index: 10;
@@ -177,8 +177,8 @@ button.danger:hover {
 
 .book-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
 }
 
 .book-card {
@@ -337,11 +337,12 @@ button.danger:hover {
 .detail-card {
   display: flex;
   gap: 20px;
-  padding: 24px;
+  padding: 28px;
   border: 1px solid var(--border);
   border-radius: 16px;
   background: var(--card-bg);
   box-shadow: var(--shadow);
+  max-width: 640px;
 }
 
 .detail-info {
@@ -404,4 +405,20 @@ button.danger:hover {
 .book-form button {
   align-self: flex-start;
   margin-top: 4px;
+}
+
+/* --- Narrower windows --- */
+
+@media (max-width: 700px) {
+  main {
+    padding: 20px 20px 48px;
+  }
+
+  .app-header {
+    padding: 14px 20px;
+  }
+
+  .detail-card {
+    max-width: none;
+  }
 }
