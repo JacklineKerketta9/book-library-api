@@ -42,6 +42,7 @@ function BookList() {
 
     return (
         <div className='book-list'>
+            <h2>All books</h2>
             <div className='toolbar'>
                 <input
                     className='search'
@@ -58,9 +59,6 @@ function BookList() {
                         </option>
                     ))}
                 </select>
-                <Link to='/add' className='button primary'>
-                    + Add book
-                </Link>
             </div>
 
             {!isLoading && (
